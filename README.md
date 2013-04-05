@@ -18,8 +18,9 @@ Rename the original `emulator` to `emulator.bak` in the same directory where it 
 
 	mv /usr/local/bin/emulator{,.bak} 
 
-Then copy this wrapper into its place:
+Then `chmod` this wrapper into its place:
 
+	chmod +x emulator
 	cp emulator /usr/local/bin/
 
 It should now magically work!
