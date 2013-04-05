@@ -1,4 +1,12 @@
 #!/bin/bash
+
+##############################################################################
+# Avoids segfault which may happen when running `emulator -snapshot-list`.
+#
+# For background and instructions, please see
+# https://github.com/hugojosefson/android-emulator-wrapper
+##############################################################################
+
 if [[ "$1" = "-snapshot-list" ]];then
    exec "$(dirname $0)"/emulator-x86 "$@"
 else
