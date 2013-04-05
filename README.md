@@ -1,8 +1,22 @@
 # Android Emulator wrapper script
 
-This wrapper for the Android Emulator executable works around an issue where `emulator -snapshot-list` causes a Segmentation Fault. This may for example happen in Jenkins with the Android Emulator plugin, which causes it to never recognize that an avd already has a snapshot, so it keeps recreating a snapshot at every build instead of creating it only once and then reusing it.
+This wrapper for the Android Emulator executable works around an issue where `emulator -snapshot-list` causes a
+Segmentation Fault.
 
-## Instructions
+## Background
+
+This may for example happen when using Jenkins with the Android Emulator plugin.
+
+The Jenkins plugin executes `emulator -snapshot-list ...` to find out whether to start from an existing snapshot or
+create one, `emulator` segfaults. The Jenkins plugin interprets that to mean there are no snapshots, and it should
+boot up the avd from scratch and create the first snapshot. This means it keeps recreating a snapshot at every build
+instead of creating it only once and then reusing it.
+
+Here is an issue filed agains the AOSP where one of the comments suggests some of the different `emulator-*` executables
+segfault and others do not, when supplied the `-snapshot-list` argument:
+<https://code.google.com/p/android/issues/detail?id=34233#c57>
+
+## Installation instructions
 
 Find out where your `emulator` executable is located.
 
@@ -12,7 +26,8 @@ If it's your own developer machine, you can probably find it like this:
 
 	which $(emulator)
 
-In my case, on osx and having installed the Android SDK via [brew](http://mxcl.github.com/homebrew/), it's `/usr/local/bin/emulator`.
+In my case, on osx and having installed the Android SDK via [brew](http://mxcl.github.com/homebrew/), it's
+`/usr/local/bin/emulator`.
 
 Rename the original `emulator` to `emulator.bak` in the same directory where it was. In my case:
 
